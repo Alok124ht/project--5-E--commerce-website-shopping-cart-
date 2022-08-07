@@ -268,12 +268,13 @@ const updateUser = async function(req, res){
     
         if (password) {
             if (!validation.isValidPassword(password)) {
-                let saltRounds = await bcrypt.genSalt(10)
+                return res.status(400).send({ status: false, message: "Password should be strong. Please use one digit, one upper case, one lower case, one special character, an in between 8 to 15 characters only!" })
+                
+            }
+            else {let saltRounds = await bcrypt.genSalt(10)
                 password = await bcrypt.hash(password, saltRounds)
                 verifyUser.password = password
-            }
-            else {
-                return res.status(400).send({ status: false, message: "Password should be strong. Please use one digit, one upper case, one lower case, one special character, an in between 8 to 15 characters only!" })
+               
     
             }
         }
