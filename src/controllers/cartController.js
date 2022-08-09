@@ -117,7 +117,7 @@ const updateCart = async function (req, res) {
       if (!findCart) {
           return res.status(400).send({ status: false, message: "cartId does not exists" })
       }
-
+      // product id validation
       if(!productId) return res.status(400).send({status : false, message : "ProductId cannot be empty!"})
       if (!validation.idMatch(productId)) {
           return res.status(400).send({ status: false, message: "Invalid productId in body" })
@@ -137,7 +137,7 @@ const updateCart = async function (req, res) {
           return res.status(400).send({ status: false, message: 'removeProduct should be 0 (product is to be removed) or 1(quantity has to be decremented by 1) ' })
       }
 
-      let findQuantity = findCart.items.find(x => x.productId.toString() == productId) //returns object
+      let findQuantity = findCart.items.find(x => x.productId == productId) 
 
       if (removeProduct === 0) {
           let totalAmount = findCart.totalPrice - (findProduct.price * findQuantity.quantity) // substract the amount of product*quantity
@@ -150,10 +150,10 @@ const updateCart = async function (req, res) {
           return res.status(200).send({ status: true, message: `${productId} has been removed!`, data: data })
       }
 
-      let itemsArr = findCart.items
-      let totalAmount = findCart.totalPrice - findProduct.price
+        let itemsArr = findCart.items
+        let totalAmount = findCart.totalPrice - findProduct.price
 
-      if(removeProduct == 1){
+        if(removeProduct == 1){
 
       for (let i=0; i<itemsArr.length; i++) {
           if (itemsArr[i].productId == productId) {

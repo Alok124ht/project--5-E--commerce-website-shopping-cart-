@@ -39,13 +39,12 @@ const isValidPinCode = (value) => {
     return result
 }
 
-const isValidPassword = function (value) {
-    const passwordregex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,15}$/;
-    if (passwordregex.test(value)) {
-        return true;
+const isValidPassword = (password) => {
+    if ( password.length < 8 || password.length > 15) {
+        return false
     }
-    return false;
-};
+    return true
+}
 
 const validateEmail = function (mail) {
     if (/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/.test(mail)) {
